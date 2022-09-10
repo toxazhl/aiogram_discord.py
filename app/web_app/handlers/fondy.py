@@ -6,7 +6,6 @@ from aiogram import Bot, Dispatcher
 from discord.ext import commands
 from sqlalchemy.orm import sessionmaker
 
-from app.configreader import config
 from app.db import queries
 
 

@@ -34,7 +34,7 @@ FILES__PRESENTATION=BQACAgIAAxkDAAIbJ2MPavcmDC-fKbxIYUt6WbHc6w0yAAIhIAACFM6BSIsE
 # Webhooks
 WEBHOOK__ENABLE=false
 ## Domain part of your webhook.
-WEBHOOK__DOMAIN=https://webhook.toxazhl.space:8443
+WEBHOOK__DOMAIN=https://example.com:8443
 
 WEBAPP__HOST=localhost
 WEBAPP__PORT=9000

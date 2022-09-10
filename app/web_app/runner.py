@@ -3,7 +3,6 @@ import logging
 
 from aiohttp import web
 
-from app.configreader import config
 from .handlers.fondy import fondy_callback_handler
 
 

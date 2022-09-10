@@ -6,8 +6,8 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler
 from aiohttp import web
 from magic_filter import F
+from sqlalchemy.orm import sessionmaker
 
-from app.configreader import config
 from .handlers import setup_routers
 from .middlewares.db import DbSessionMiddleware
 
@@ -15,14 +15,16 @@ from .middlewares.db import DbSessionMiddleware
 logger = logging.getLogger(__name__)
 
 
-async def setup(db_pool) -> tuple[Bot, Dispatcher]:
-    bot = Bot(token=config.telegram.token, parse_mode="HTML")
+async def setup(
+    token: str, fsm_storage: str, redis_dsn: str, db_pool: sessionmaker
+) -> tuple[Bot, Dispatcher]:
+    bot = Bot(token=token, parse_mode="HTML")
 
     # Choosing FSM storage
-    if config.telegram.fsm_storage == "memory":
+    if fsm_storage == "memory":
         dp = Dispatcher(storage=MemoryStorage())
     else:
-        dp = Dispatcher(storage=RedisStorage.from_url(config.storages.redis_dsn))
+        dp = Dispatcher(storage=RedisStorage.from_url(redis_dsn))
     
     dp.message.filter(F.chat.type == "private")
     
@@ -36,10 +38,10 @@ async def setup(db_pool) -> tuple[Bot, Dispatcher]:
 
 
 async def setup_webhook(
-    bot: Bot, dp: Dispatcher, app: web.Application, **data
+    bot: Bot, dp: Dispatcher, app: web.Application, domain: str, path: str, **data
 ) -> None:
     me = await bot.get_me()
-    url = f'{config.webhook.domain}{config.telegram.webhook_path}'
+    url = f'{domain}{path}'
     logger.info(f'Run webhook for bot @{me.username} id={bot.id} - \'{me.full_name}\' on {url}')
 
     await bot.set_webhook(
@@ -52,7 +54,7 @@ async def setup_webhook(
         dispatcher=dp,
         bot=bot,
         **data
-    ).register(app, path=config.telegram.webhook_path)
+    ).register(app, path=path)
     
 
 async def run(bot: Bot, dp: Dispatcher, **data) -> None:

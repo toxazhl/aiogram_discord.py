@@ -2,20 +2,18 @@ import logging
 import os
 
 import discord
-from discord.ext import commands
-
-from app.configreader import config
+from discord.ext.commands import Bot
 
 
 logger = logging.getLogger(__name__)
 
 
-async def setup() -> commands.Bot:
-    bot = commands.Bot(command_prefix=config.discord.prefix, intents=discord.Intents.all())
+async def setup(prefix: str) -> Bot:
+    bot = Bot(command_prefix=prefix, intents=discord.Intents.all())
     return bot
 
 
-async def run(bot: commands.Bot):
+async def run(bot: Bot, token: str) -> None:
     logger.info(f'Loadins extensions...')
 
     # Load extensions
@@ -24,5 +22,5 @@ async def run(bot: commands.Bot):
             await bot.load_extension(f"app.discord.extensions.{file[:-3]}")
     
     async with bot:
-        await bot.start(config.discord.token)
+        await bot.start(token)
 
