@@ -1,0 +1,1 @@
+from .fondy.client import FondyClient

@@ -1,0 +1,40 @@
+# Telegram bot
+## Token. Get it from @BotFather
+TELEGRAM__TOKEN=YOUR_TOKEN_HERE
+## FSM Storage for saving user data and states. Can be 'memory' or 'redis'
+TELEGRAM__FSM_STORAGE=memory
+## Actual path for your webhook on your domain
+TELEGRAM__WEBHOOK_PATH=/webhook/telegram_bot
+
+# Discord Bot
+## Token. Get it from https://discord.com/developers
+DISCORD__TOKEN=YOUR_TOKEN_HERE
+DISCORD__PREFIX=!
+
+# Storages
+## Redis connection string. Required if BOT_FSM_STORAGE=redis
+STORAGES__REDIS_DSN=redis://localhost:6379/0
+## PostgreSQL connection string. Always required
+STORAGES__POSTGRES_DSN=postgresql+asyncpg://cryptocrew:o6n1YMQR49TMaa5vgCfgN@178.157.91.143:5432/cryptocrew
+
+# Fondy
+## Merchant id. Required
+FONDY__MERCHANT_ID=1396424
+## Secret key. Required
+FONDY__SECRET_KEY=test
+## Payment lifetime. Required
+FONDY__LIFETIME=604800
+## Actual path for your webhook on your domain
+FONDY__WEBHOOK_PATH=/fondy/webhook
+
+# App config
+## Files
+FILES__PRESENTATION=BQACAgIAAxkDAAIbJ2MPavcmDC-fKbxIYUt6WbHc6w0yAAIhIAACFM6BSIsEluJW_vRWKQQ
+
+# Webhooks
+WEBHOOK__ENABLE=false
+## Domain part of your webhook.
+WEBHOOK__DOMAIN=https://webhook.toxazhl.space:8443
+
+WEBAPP__HOST=localhost
+WEBAPP__PORT=9000
