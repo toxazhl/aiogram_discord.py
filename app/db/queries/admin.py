@@ -1,7 +1,7 @@
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..models import UserModel, AdminModel
+from app.db.models import UserModel, AdminModel
 
 
 async def is_admin(session: AsyncSession, telegram_id: int) -> bool:

@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 
 
 async def setup(db_pool) -> tuple[Bot, Dispatcher]:
-    # Creating bot and its dispatcher
     bot = Bot(token=config.telegram.token, parse_mode="HTML")
 
     # Choosing FSM storage
@@ -25,10 +24,8 @@ async def setup(db_pool) -> tuple[Bot, Dispatcher]:
     else:
         dp = Dispatcher(storage=RedisStorage.from_url(config.storages.redis_dsn))
     
-    # Allow interaction in private chats (not groups or channels) only
     dp.message.filter(F.chat.type == "private")
     
-    # Registering middlewares
     dp.update.middleware(DbSessionMiddleware(db_pool))
 
     # Register handlers
@@ -45,14 +42,12 @@ async def setup_webhook(
     url = f'{config.webhook.domain}{config.telegram.webhook_path}'
     logger.info(f'Run webhook for bot @{me.username} id={bot.id} - \'{me.full_name}\' on {url}')
 
-    # Set webhook
     await bot.set_webhook(
         url=url,
         drop_pending_updates=True,
         allowed_updates=dp.resolve_used_update_types()
     )
 
-    # Registering webhook handler for bot
     SimpleRequestHandler(
         dispatcher=dp,
         bot=bot,
@@ -61,10 +56,8 @@ async def setup_webhook(
     
 
 async def run(bot: Bot, dp: Dispatcher, **data) -> None:
-    # Delete webhook
     await bot.delete_webhook()
 
-    # Start polling
     await dp.start_polling(
         bot,
         allowed_updates=dp.resolve_used_update_types(),

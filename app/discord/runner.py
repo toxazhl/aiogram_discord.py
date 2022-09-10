@@ -23,7 +23,6 @@ async def run(bot: commands.Bot):
         if file.endswith(".py"):
             await bot.load_extension(f"app.discord.extensions.{file[:-3]}")
     
-    # Run bot
     async with bot:
         await bot.start(config.discord.token)
 
