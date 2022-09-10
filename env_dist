@@ -15,7 +15,7 @@ DISCORD__PREFIX=!
 ## Redis connection string. Required if BOT_FSM_STORAGE=redis
 STORAGES__REDIS_DSN=redis://localhost:6379/0
 ## PostgreSQL connection string. Always required
-STORAGES__POSTGRES_DSN=postgresql+asyncpg://cryptocrew:o6n1YMQR49TMaa5vgCfgN@178.157.91.143:5432/cryptocrew
+STORAGES__POSTGRES_DSN=postgresql+asyncpg://user:pass@ip:5432/db_name
 
 # Fondy
 ## Merchant id. Required
